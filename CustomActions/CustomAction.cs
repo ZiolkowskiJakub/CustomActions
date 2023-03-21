@@ -10,7 +10,7 @@ namespace CustomActions
         [CustomAction]
         public static ActionResult UpdateRevitManifestFiles(Session session)
         {
-            string[] versions = new string[] { "2017", "2018", "2019", "2020", "2021", "2022" };
+            string[] versions = new string[] { "2017", "2018", "2019", "2020", "2021", "2022", "2023" };
 
             string mainManifestFileDirectory = Modify.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Autodesk", "Revit", "Addins");
 
