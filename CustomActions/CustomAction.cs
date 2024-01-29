@@ -1,5 +1,7 @@
 using Microsoft.Deployment.WindowsInstaller;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -35,7 +37,32 @@ namespace CustomActions
                 return ActionResult.Failure;
             }
 
-            //MessageBox.Show(assemblyName);
+            if(session.CustomActionData.TryGetValue("VERSIONS", out string versions_Custom) && !string.IsNullOrWhiteSpace(versions_Custom))
+            {
+                List<string> versionList = versions_Custom.Split(',')?.ToList();
+                if(versionList != null)
+                {
+                    for (int i = versionList.Count - 1; i >= 0; i--)
+                    {
+                        string version = versionList[i]?.Trim();
+
+                        if(string.IsNullOrWhiteSpace(version))
+                        {
+                            versionList.RemoveAt(i);
+                            continue;
+                        }
+
+                        versionList[i] = version;
+                    }
+
+                    if(versionList != null && versionList.Count != 0)
+                    {
+                        versions = versionList.ToArray();
+                    }
+                }
+            }
+
+            //MessageBox.Show(string.Join(", ", versions));
 
             foreach (string version in versions)
             {
